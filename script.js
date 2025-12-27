@@ -119,4 +119,4 @@ function displayController(game) {
 const game = Gameboard();
 const display = displayController(game);
 
-display.render();
+// display.render();
