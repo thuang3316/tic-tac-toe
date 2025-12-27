@@ -72,8 +72,8 @@ function Gameboard() {
     };
   }
 
-  const player1 = createPlayer('x');
-  const player2 = createPlayer('o');
+  const player1 = createPlayer('X');
+  const player2 = createPlayer('O');
 
   player1.switchPlayer = player2;
   player2.switchPlayer = player1;
@@ -90,3 +90,33 @@ function Gameboard() {
     resetBoard
   };
 }
+
+function displayController(game) {
+    const cells = document.querySelectorAll('.cell');
+
+    function render() {
+        const gameBoard = game.getBoard();
+        gameBoard.forEach((mark, index) => {
+            cells[index].textContent = mark;
+        });
+    }
+
+    cells.forEach(cell => {
+        cell.addEventListener('click', () => {
+            const index = Number(cell.dataset.index);
+            const x = index % 3;
+            const y = Math.floor(index / 3);
+
+            game.playTurn(x, y);
+
+            render();
+        });
+    });
+
+    return {render};
+}
+
+const game = Gameboard();
+const display = displayController(game);
+
+display.render();

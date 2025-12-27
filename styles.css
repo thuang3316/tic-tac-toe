@@ -1,0 +1,35 @@
+/* Gameboard container */
+#gameboard {
+    display: grid;
+    grid-template-columns: repeat(3, 100px); /* 3 columns, 100px each */
+    grid-template-rows: repeat(3, 100px);    /* 3 rows, 100px each */
+    gap: 5px; /* spacing between cells */
+    margin: 50px auto; /* center on page */
+    width: max-content;
+    background-color: #333; /* optional dark border around grid */
+    padding: 5px;
+    border-radius: 10px;
+}
+
+/* Each cell */
+.cell {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+/* Hover effect */
+.cell:hover {
+    background-color: #f0f0f0;
+}
+
+/* Optional: prevent text selection */
+.cell {
+    user-select: none;
+}
