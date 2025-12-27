@@ -51,6 +51,7 @@ function Gameboard() {
         if (terminateGame) return;
 
         const boardLocation = 3 * y + x;
+        const gameResult = document.querySelector('#gameResult');
 
         if (
           boardLocation < 0 ||
@@ -65,8 +66,12 @@ function Gameboard() {
 
         if (outcome.result === "continue") {
             currentPlayer = this.switchPlayer;
+        } else if (outcome.result === 'draw') {
+            gameResult.textContent = 'Draw!';
         } else {
-            console.log(outcome);
+            const winningPlayerName = outcome.winnerMark === 'x' ? document.querySelector('#player2-name').value.trim() : document.querySelector('#player1-name').value.trim();
+
+            gameResult.textContent = `${winningPlayerName} wins!`;
         }
       }
     };
@@ -113,10 +118,47 @@ function displayController(game) {
         });
     });
 
+    // start button
+    const startBtn = document.querySelector('#start-btn');
+    const pageBoard = document.querySelector('#gameboard');
+    const playerText = document.querySelector('#playerText');
+    const player1Text = document.querySelector('#player1Text');
+    const player2Text = document.querySelector('#player2Text');
+    const playerInputs = document.querySelector('#player-inputs');
+    const restartBtn = document.querySelector('#restart-btn');
+
+    startBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const player1Name = document.querySelector('#player1-name').value.trim();
+        const player2Name = document.querySelector('#player2-name').value.trim();
+
+        if (player1Name === '' || player2Name === '') {
+            alert('Please enter player names!');
+        } else{
+            pageBoard.style.display = 'grid';
+            player1Text.textContent += player1Name;
+            player2Text.textContent += player2Name;
+
+            playerText.style.display = 'flex';
+            playerInputs.style.display = 'none';
+            startBtn.style.display = 'none';
+            restartBtn.style.display = 'flex';
+        }
+    })
+
+    // restart button
+    restartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        const gameResult = document.querySelector('#gameResult');
+        game.resetBoard();
+        display.render();
+        gameResult.textContent = '';
+    })
+
     return {render};
 }
 
 const game = Gameboard();
 const display = displayController(game);
-
-// display.render();
